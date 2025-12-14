@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Details</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f8f9fa; }
+        h2 { text-align: center; color: #2e86de; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+        th { background: #2e86de; color: white; }
+        .meta-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Attendance Details</h2>
+
+    <p><strong>Date:</strong> {{ lecture.date }}</p>
+    <p><strong>Class:</strong> {{ lecture.class }}</p>
+    <p><strong>Subject:</strong> {{ lecture.subject }}</p>
+    <p><strong>Year:</strong> {{ lecture.year }}</p>
+    <p><strong>Day:</strong> {{ lecture.day }}</p>
+    <p><strong>Time:</strong> {{ lecture.time }}</p>
+    
+    <hr>
+    
+    <table border="1" cellpadding="10">
+        <tr>
+            <th>Enrollment</th>
+            <th>Status</th>
+        </tr>
+    
+        {% for s in students %}
+        <tr>
+            <td>{{ s.enrollment_no }}</td>
+            <td>{{ s.attendance_status }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+</body>
+</html>

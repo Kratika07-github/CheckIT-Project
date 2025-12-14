@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Attendance Form</title>
+
+<style>
+  body { font-family: Arial; background: #f8f9fa; padding: 30px; }
+  h2 { text-align: center; color: #2e86de; }
+  .form-section { background: #fff; padding: 20px; border-radius: 10px; width: 95%; margin: auto; }
+  label { font-weight: bold; margin-right: 10px; }
+  select { padding: 5px 10px; margin-right: 15px; }
+  .row { display: flex; align-items: center; margin-bottom: 15px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+  th, td { border: 1px solid #ccc; padding: 10px; }
+  th { background: #2e86de; color: white; }
+  .submit-btn { margin-top: 15px; padding: 10px 20px; background: #2e86de; color: white; border: none; border-radius: 5px; }
+</style>
+
+</head>
+<body>
+
+<h2>Attendance Form</h2>
+
+<div class="form-section">
+<form method="POST" action="{% url 'submit_attendance' %}">
+{% csrf_token %}
+
+<!-- 🔹 ALL INPUTS IN ONE LINE -->
+<div class="row">
+  <label>Class:</label>
+  <select id="classSelect" name="class" required>
+      <option value="">Select</option>
+      {% for c in classes %}
+      <option value="{{ c }}">{{ c }}</option>
+      {% endfor %}
+  </select>
+
+  <label>Year:</label>
+  <select id="yearSelect" name="year" required>
+      <option value="">Select</option>
+      {% for y in years %}
+      <option value="{{ y }}">{{ y }}</option>
+      {% endfor %}
+  </select>
+
+  <label>Subject:</label>
+  <select id="subjectSelect" name="subject" required>
+      <option value="">Select</option>
+      {% for sub in subjects %}
+      <option value="{{ sub }}">{{ sub }}</option>
+      {% endfor %}
+  </select>
+
+  <label>Day:</label>
+  <select name="day" required>
+      <option>Monday</option>
+      <option>Tuesday</option>
+      <option>Wednesday</option>
+      <option>Thursday</option>
+      <option>Friday</option>
+  </select>
+
+  <label>Time:</label>
+  <select name="time" required>
+      <option>8:20-9:05</option>
+      <option>9:05-9:50</option>
+      <option>9:50-10:40</option>
+      <option>10:40-11:20</option>
+      <option>11:20-12:10</option>
+      <option>12:10-1:00</option>
+      <option>1:00-1:50</option>
+      <option>1:50-2:40</option>
+      <option>2:40-3:30</option>
+      <option>3:30-4:15</option>
+      <option>4:15-5:00</option>
+  </select>
+
+  <label>Batch:</label>
+  <select name="batch">
+      <option value="1">1</option>
+      <option value="2">2</option>
+  </select>
+</div>
+
+<!-- 🔹 STUDENT TABLE (loaded dynamically) -->
+<table id="studentTable">
+  <thead>
+    <tr>
+      <th>Sr</th>
+      <th>Name</th>
+      <th>Enrollment</th>
+      <th>Attendance</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<button class="submit-btn" type="submit">Submit Attendance</button>
+</form>
+</div>
+
+<script>
+// Load students when class or year changes
+document.getElementById("classSelect").addEventListener("change", loadStudents);
+document.getElementById("yearSelect").addEventListener("change", loadStudents);
+
+function loadStudents() {
+    const cls = document.getElementById("classSelect").value;
+    const yr = document.getElementById("yearSelect").value;
+
+    if (!cls || !yr) return;
+
+    fetch(`/attendance/get_students/?class=${cls}&year=${yr}`)
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.querySelector("#studentTable tbody");
+            tbody.innerHTML = "";
+
+            data.students.forEach((s, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${s.name}</td>
+                        <td>${s.enrollment_no}</td>
+                        <td>
+                            <input type="radio" name="${s.enrollment_no}" value="Present" required> Present
+                            <input type="radio" name="${s.enrollment_no}" value="Absent"> Absent
+                        </td>
+                    </tr>`;
+            });
+        });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+{% extends "index.html" %}
+{% block title %}Faculty Dashboard{% endblock %}
+
+{% block sidebar %}
+<a class="active">Dashboard</a>
+<a href="{% url 'attendance_form' %}" class="btn btn-primary mt-3">Take Attendance</a>
+<a href="{% url 'faculty_view_attendance' %}" class="btn btn-secondary">View Attendance Records</a>
+
+<a>Upload Notes</a>
+<a>Class List</a>
+{% endblock %}
+
+{% block page_title %}Faculty Dashboard{% endblock %}
+
+{% block main_content %}
+<div class="row">
+
+    <div class="col-md-4">
+        <div class="card p-3 shadow-sm">
+            <h6>Today's Classes</h6>
+            <h3>4</h3>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card p-3 shadow-sm">
+            <h6>Pending Attendance</h6>
+            <h3>2</h3>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card p-3 shadow-sm">
+            <h6>Notes Uploaded</h6>
+            <h3>18</h3>
+        </div>
+    </div>
+
+</div>
+
+<div class="card p-3 mt-4 shadow-sm">
+    <h5>Quick Actions</h5>
+    <ul>
+        <li>Mark Attendance</li>
+        <li>Upload Notes</li>
+        <li>Send Announcement</li>
+    </ul>
+</div>
+{% endblock %}

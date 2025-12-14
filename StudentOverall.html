@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body { background: #f2f4f7; padding: 20px; }
+        .card { border-radius: 12px; }
+        h2 { font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+<h2>Overall Attendance</h2>
+
+<table class="table table-bordered">
+    <tr><th>Name</th><td>{{ name }}</td></tr>
+    <tr><th>Enrollment</th><td>{{ enrollment }}</td></tr>
+    <tr><th>Total Lectures</th><td>{{ total }}</td></tr>
+    <tr><th>Present</th><td>{{ present }}</td></tr>
+    <tr><th>Absent</th><td>{{ absent }}</td></tr>
+    <tr><th>Percentage</th><td><b>{{ percent }}%</b></td></tr>
+</table>

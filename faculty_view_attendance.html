@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Attendance Records</title>
+    <style>
+        body { font-family: Arial; background: #f4f6f9; padding: 30px; }
+        table { width: 100%; border-collapse: collapse; background: white; }
+        th, td { padding: 12px; border: 1px solid #ddd; }
+        th { background: #2e86de; color: white; }
+        h2 { color: #2e86de; }
+        .btn-view {
+            padding: 6px 15px;
+            background: #3498db;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .btn-view:hover { background: #1b4f72; }
+    </style>
+</head>
+<body>
+
+<h2>📄 My Attendance Records</h2>
+
+{% if records %}
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Date</th>
+        <th>Class</th>
+        <th>Subject</th>
+        <th>Year</th>
+        <th>Day</th>
+        <th>Time</th>
+        <th>Present</th>
+        <th>Absent</th>
+        <th>Action</th>
+    </tr>
+
+    {% for rec in records %}
+    <tr>
+        <td>{{ rec.attendance_date }}</td>
+        <td>{{ rec.class }}</td>
+        <td>{{ rec.subject }}</td>
+        <td>{{ rec.year }}</td>
+        <td>{{ rec.day }}</td>
+        <td>{{ rec.time }}</td>
+        <td>{{ rec.present }}</td>
+        <td>{{ rec.absent }}</td>
+        <td>
+            <a href="{% url 'faculty_view_details' rec.group_id %}">View</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% else %}
+<p>No attendance records found.</p>
+{% endif %}
